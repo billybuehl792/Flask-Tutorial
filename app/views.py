@@ -4,8 +4,8 @@ from flask import render_template
 
 @app.route("/")
 def index():
-    return render_template("public/index.html", title="Home")
+    return render_template("public/index.html")
 
 @app.route("/about")
 def about():
-    return "About Page!"
+    return render_template("public/about.html")
