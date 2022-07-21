@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% import "macros/input_macros.html" as im %}
+
+{% block title %}Jinja{% endblock %}
+
+{% block main %}
+<div class="container my-3">
+    <div class="row">
+        <div class="col">
+
+            <h1>Jinja Templates</h1>
+            <hr>
+
+
+            <h4>Variables</h4>
+            <hr>
+            <p>Name: {{ my_name }}</p>
+            
+
+            <h4>Looping</h4>
+            <hr>
+            <ul>
+                {% for lang in langs %}
+                <li>{{ lang }}</li>
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for lang in langs %}
+                <li>{{ loop.index0 }}: {{ lang }}</li>
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for k, v in friends.items() %}
+                <li>{{ k }}: {{ v }}</li>
+                {% endfor %}
+            </ul>
+
+
+            <h4>Access class attributes</h4>
+            <hr>
+            <p>{{ my_remote.name }}</p>
+
+
+            <h4>Unpack variables</h4>
+            <hr>
+            {% set a, b = colors %}
+            <p>{{ a }}</p>
+            <p>{{ b }}</p>
+
+
+            <h4>Call a function</h4>
+            <hr>
+            <p>{{ repeat("Flask", 10) }}</p>
+
+
+            <h4>Call a class method</h4>
+            <hr>
+            <p>{{ my_remote.clone() }}</p>
+
+
+            <h4>Conditionals</h4>
+            <hr>
+            {% if cool %}
+                <p>Cool is {{ cool }}</p>
+            {% endif %}
+            
+
+            <h4>Template Filters</h4>
+            <hr>
+            <p>{{ langs|length }}</p>
+            <p>{{ my_name|reverse }}</p>
+            <p>{{ my_name|upper }}</p>
+            <p>{{ langs|join(', ') }}</p>
+            <p>{{ date|clean_date }}</p>
+
+
+            <h4>Escaping</h4>
+            <hr>
+            {{ my_html|safe }}
+
+
+            <h4>Macro - Reusable Function</h4>
+            <hr>
+            <div class="container mx-4 p-4 bg-secondary">
+                <h5>Boring Form</h5>
+                {{ im.input(label="Name", name="Name", id="name", placeholder="Please enter your name") }}
+                {{ im.input(label="Age", name="Age", type="number", id="age", placeholder="Please enter your age") }}
+                {{ im.input(label="Password", name="Password", type="password", id="password", placeholder="Password") }}
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
