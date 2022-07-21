@@ -3,6 +3,24 @@ from app import app
 from flask import render_template, request, redirect
 from datetime import datetime
 
+users = {
+    "bbuehl792" : {
+        "name": "Billy Buehl",
+        "bio": "Motion Designer",
+        "site": "instagram.com/kevinjosephcole_art"
+    }, 
+    "duncanM1" : {
+        "name": "Duncan McDonell",
+        "bio": "Uran Planner",
+        "site": "trains.com"
+    }, 
+    "gooberH7" : {
+        "name": "Christian Hutchinson",
+        "bio": "Goober",
+        "site": "smirnoff.com"
+    }, 
+}
+
 @app.template_filter('clean_date')
 def clean_date(dt):
     return dt.strftime('%d %b %Y')
@@ -74,3 +92,13 @@ def sign_up():
         return redirect(request.url)
     
     return render_template("public/sign_up.html")
+
+@app.route("/profile/<username>")
+def profile(username):
+    
+    user = None
+
+    if username in users:
+        user = users[username]
+
+    return render_template("public/profile.html", user=user, username=username)
