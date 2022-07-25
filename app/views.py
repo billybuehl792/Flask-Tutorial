@@ -1,6 +1,7 @@
 
+import re
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, jsonify, make_response
 from datetime import datetime
 
 users = {
@@ -95,10 +96,25 @@ def sign_up():
 
 @app.route("/profile/<username>")
 def profile(username):
-    
+
     user = None
 
     if username in users:
         user = users[username]
 
     return render_template("public/profile.html", user=user, username=username)
+
+@app.route("/json", methods=["GET", "POST"])
+def json():
+
+    if request.is_json:
+        req = request.get_json()
+        response = {
+            "message": "JSON received!",
+            "name": req.get("name")
+        }
+        res = make_response(jsonify(response), 200)
+        return res
+    else: 
+        res = make_response(jsonify({"message": "No JSON"}), 400)
+
