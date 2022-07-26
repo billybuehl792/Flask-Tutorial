@@ -118,3 +118,13 @@ def json():
     else: 
         res = make_response(jsonify({"message": "No JSON"}), 400)
 
+@app.route("/guestbook")
+def guestbook():
+    return render_template("public/guestbook.html")
+
+@app.route("/guestbook/create-entry", methods=["POST"])
+def create_entry():
+    req = request.get_json()
+    print(req)
+
+    return make_response(jsonify({"message": "JSON Received!"}, 200))

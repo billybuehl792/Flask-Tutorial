@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Guestbook{% endblock %}
+
+{% block main %}
+<div class="container bg-light text-dark">
+    <p class="lead p-3 mb-3">Hello welcome to the guestbook page</p>
+
+    <div class="container-fluid p-3 mb-3">
+        <div class="form-group p-2">
+            <label for="nameInput" class="form-label">Name</label>
+            <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+        </div>
+        <div class="form-group p-2">
+            <label for="messageInput" class="form-label">Message</label>
+            <input type="text" class="form-control" id="messageInput" placeholder="Enter your message">
+        </div>
+        <div class="form-group p-2">
+            <button type="submit" class="btn btn-primary" id="submitButton" onclick="submit_entry();">Submit</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    function submit_entry() {
+        var name = document.getElementById("nameInput");
+        var message = document.getElementById("messageInput");
+
+        var entry = {
+            name: name.value,
+            message: message.value
+        }
+        
+        fetch(window.origin + "/guestbook/create-entry", {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(entry),
+            cache: "no-cache",
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(function(response){
+            if (response.status !== 200) {
+                console.log("Response status not 200!");
+            } else {
+                response.json().then(function(data) {
+                    console.log(data);
+                })
+            }
+        });
+    }
+
+</script>
+{% endblock %}
